@@ -1,4 +1,5 @@
 #include "totp.h"
+#include "base32.h"
 #include <openssl/hmac.h>
 #include <openssl/sha.h>
 #include <ctime>
@@ -8,7 +9,7 @@
 TOTP::TOTP(const std::string& secret, int digits, int period) 
     : digits(digits), period(period) {
     // Convert base32 secret to bytes
-    // (Implementation depends on your base32 decoder)
+    secretKey = Base32::decode(secret);
 }
 
 uint64_t TOTP::getCurrentTimestamp() const {
